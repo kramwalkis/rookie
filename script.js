@@ -10,15 +10,33 @@ addNew.addEventListener("click", showInput);
 cancel.addEventListener("click", cancelNewNote);
 addToNotes.addEventListener("click", addNewNote);
 
-const arrayOfNotes = [];
+let arrayOfNotes = [];
+
+localStorage.getItem("arrayOfNotes")
+  ? (arrayOfNotes = JSON.parse(localStorage.getItem("arrayOfNotes")))
+  : null;
+
+displayNotes(arrayOfNotes);
 
 function addNewNote() {
-  arrayOfNotes.push({
-    text: noteContent.value,
-    feature: "none",
-  });
-  cancelNewNote();
-  displayNotes(arrayOfNotes);
+  if (noteContent.value) {
+    arrayOfNotes.push({
+      text: noteContent.value,
+      feature: "none",
+    });
+    if (localStorage.getItem("arrayOfNotes")) {
+      localStorage.setItem("arrayOfNotes", JSON.stringify(arrayOfNotes));
+    } else {
+      localStorage.setItem(
+        "arrayOfNotes",
+        JSON.stringify([{ text: noteContent.value, feature: "none" }])
+      );
+    }
+    cancelNewNote();
+    displayNotes(arrayOfNotes);
+  } else {
+    alert("Please enter a note, or click cancel");
+  }
 }
 
 function cancelNewNote() {
@@ -33,10 +51,11 @@ function showInput() {
 }
 
 function displayNotes(array) {
+  console.log(array);
   container.innerHTML = "";
   array.map((item, index) => {
     container.innerHTML += `
-        <div class="${item.feature}">
+        <div class="${item.feature} card">
             <p>${item.text}</p>
             <div class="buttons">
               <div id="${index}com" class="completed">COMPLETED</div>
@@ -44,21 +63,23 @@ function displayNotes(array) {
             </div>
           </div>
         `;
-    document
-      .getElementById(`${index}com`)
-      .addEventListener("click", markAsCompleted);
-    document
-      .getElementById(`${index}non`)
-      .addEventListener("click", markAsUnCompleted);
+  });
+  addColors(".completed", markAsCompleted);
+  addColors(".uncompleted", markAsUnCompleted);
+}
+
+function addColors(className, functionName) {
+  [...document.querySelectorAll(className)].map((item) => {
+    item.addEventListener("click", functionName);
   });
 }
 
 function markAsCompleted(e) {
-  console.log(e.target.id);
   let indexToChange = e.target.id.slice(0, 1);
   arrayOfNotes.map((item, index) => {
     indexToChange == index ? (item.feature = "completedColor") : null;
   });
+  localStorage.setItem("arrayOfNotes", JSON.stringify(arrayOfNotes));
   displayNotes(arrayOfNotes);
 }
 
@@ -67,5 +88,6 @@ function markAsUnCompleted(e) {
   arrayOfNotes.map((item, index) => {
     indexToChange == index ? (item.feature = "unCompletedColor") : null;
   });
+  localStorage.setItem("arrayOfNotes", JSON.stringify(arrayOfNotes));
   displayNotes(arrayOfNotes);
 }

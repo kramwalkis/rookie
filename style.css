@@ -12,6 +12,7 @@ body {
 }
 
 #addNew {
+  margin: 1rem;
   padding: 1rem;
   width: 5rem;
   background-color: pink;
@@ -41,42 +42,53 @@ body {
   background-color: green;
   border: 0.2rem solid rgb(10, 49, 10);
   color: white;
-  font-family: "Courier New", Courier, monospace;
-  font-weight: 500;
-  cursor: pointer;
+  transition: 0.2s;
+}
+
+.completed:hover {
+  background-color: rgb(10, 49, 10);
+  border: 0.2rem solid green;
+  transition: 0.2s;
 }
 
 .uncompleted {
   background-color: rgb(247, 62, 71);
   border: 0.2rem solid rgb(236, 121, 124);
   color: white;
+  transition: 0.2s;
+}
+
+.uncompleted:hover {
+  background-color: rgb(236, 121, 124);
+  border: 0.2rem solid rgb(247, 62, 71);
+  transition: 0.2s;
+}
+
+.completed,
+.uncompleted {
   font-family: "Courier New", Courier, monospace;
   font-weight: 500;
   cursor: pointer;
+  margin: 0.2rem;
+}
+
+.card {
+  margin: 0.5rem;
+  padding: 1rem;
+  border: 3px solid black;
+  border-radius: 0.5rem;
 }
 
 .none {
   background-color: wheat;
-  margin: 0.5rem;
-  padding: 1rem;
-  border: 3px solid black;
-  border-radius: 0.5rem;
 }
 
 .completedColor {
   background-color: rgb(187, 245, 140);
-  margin: 0.5rem;
-  padding: 1rem;
-  border: 3px solid black;
-  border-radius: 0.5rem;
 }
 
 .unCompletedColor {
   background-color: rgb(248, 174, 144);
-  margin: 0.5rem;
-  padding: 1rem;
-  border: 3px solid black;
-  border-radius: 0.5rem;
 }
 
 p {
@@ -97,30 +109,33 @@ p {
   display: none;
 }
 
-#addToNotes {
-  background-color: rgb(147, 210, 30);
-  color: white;
-  font-family: "Courier New", Courier, monospace;
+#addToNotes,
+#cancel {
   font-weight: 500;
   font-size: 18px;
   padding: 0.5rem;
   margin: 0.5rem;
+  cursor: pointer;
+}
+
+#addToNotes {
+  background-color: rgb(147, 210, 30);
+  color: white;
+  font-family: "Courier New", Courier, monospace;
 }
 
 #cancel {
   background-color: rgb(210, 30, 45);
   color: white;
   font-family: "Courier New", Courier, monospace;
-  font-weight: 500;
-  font-size: 18px;
-  padding: 0.5rem;
-  margin: 0.5rem;
 }
 
 #backDrop {
-  height: 100vh;
   background-color: rgb(0, 0, 0, 0.5);
-  width: 100vw;
-  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
   display: none;
 }
